@@ -501,9 +501,9 @@ body {
 @media (min-width: 1001px) {
 }
 .thumbnail {
-	width: 200px;
-	border-radius: 200px;
-	height: 200px;
+	width: 300px;
+	border-radius: 100px;
+	height: 300px;
 	margin-left: auto;
 }
 .thumbnailMain {
