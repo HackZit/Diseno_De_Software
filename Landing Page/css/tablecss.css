@@ -1,0 +1,41 @@
+@charset "utf-8";
+/* CSS Document */
+
+table {
+	border: 1px solid rgb(200, 200, 200);
+	border-collapse: collapse;
+	font-size: .9rem;
+	width: 80%;
+}
+
+tr {
+	text-align: center;
+}
+
+tr:nth-child(odd) {
+	background: #826A6A;
+}
+
+th {
+	background: #A66263;
+	border: 1px solid rgb(160, 160, 160);
+	color: rgb(255, 255, 255);
+	padding: .8rem;
+}
+
+td {
+	border: 1px solid rgb(160, 160, 160);
+	padding: .8rem;
+}
+
+table tr:hover {
+	background: rgb(255, 235, 185);
+}
+
+.table-container {
+	margin: 0 0 1rem;
+	overflow: auto;
+	overflow-y: auto;
+	width: 80%;
+	margin-left: 200px;
+}
