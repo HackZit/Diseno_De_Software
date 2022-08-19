@@ -101,7 +101,6 @@ body {
 .columns {
 	width: 25%;
 	float: left;
-	font-family: "Source Sans Pro";
 	color: #000000;
 	font-size: 24px;
 	line-height: 24px;
@@ -156,7 +155,6 @@ body {
 	float: left;
 	margin-right: auto;
 	margin-top: 0px;
-	font-family: "Source Sans Pro";
 	font-weight: normal;
 	color: #FFFFFF;
 	letter-spacing: 1px;
@@ -171,37 +169,41 @@ body {
 	cursor: pointer;
 }
 .left_article {
-	background-color: #2a2a2a;
+	background-color: #ffffff;
 	width: 60%;
 	float: left;
-	font-family: "Source Sans Pro";
-	color: #343434;
 	padding-bottom: 15px;
 }
 .noDisplay {
 	display: none;
 }
-.container .left_article h3 {
+.container .left_article h1 {
 	padding-left: 5%;
 	padding-right: 5%;
 	margin-top: 5%;
-	color: #717070;
+	color: #D13133;
 	font-weight: bold;
+	font-family: 'Manrope';
+	font-size: 30px;
 	text-transform: uppercase;
 }
+
 .container .left_article p {
 	padding-left: 5%;
 	padding-right: 5%;
+	padding-top: 2%;
 	text-align: justify;
+	font-family: 'Manrope';
+	font-size: 20px;
 	line-height: 24px;
 	margin-top: 30px;
 	margin-bottom: 15px;
-	color: #B3B3B3;
+	color: #000000;
 }
 .right_article {
 	width: 40%;
 	float: left;
-	background-color: #2a2a2a;
+	background-color: #ffffff;
 }
 .container .right_article ul {
 	margin-top: 0px;
@@ -214,7 +216,6 @@ body {
 	padding-left: 0px;
 }
 .right_article ul li {
-	font-family: "Source Sans Pro";
 	list-style: none;
 	text-align: center;
 	background-color: #B3B3B3;
@@ -264,13 +265,13 @@ body {
 }
 .container .column_half.left_half h2 {
 	color: #FFFFFF;
-	font-family: "Source Sans Pro";
+	font-family: "Manrope";
 	text-align: center;
 }
 .right_half {
 	background-color: #01B2D1;
 	color: #FFFFFF;
-	font-family: "Source Sans Pro";
+	font-family: "Manrope";
 	text-align: center;
 	font-weight: bold;
 }
@@ -286,7 +287,7 @@ body {
 	font-weight: lighter;
 	letter-spacing: 2px;
 	border-top-width: 2px;
-	font-family: "Source Sans Pro";
+	font-family: "Manrope";
 }
 body {
     margin-top: 0px;
@@ -294,6 +295,7 @@ body {
     margin-bottom: 0px;
     margin-left: 0px;
     overflow-x: hidden;
+	font-family: 'Manrope';
 
 }
 
@@ -373,15 +375,18 @@ body {
 	padding-bottom: 0px;
 	margin-bottom: 0px;
 }
-.container .left_article h3 {
+.container .left_article h1 {
 	margin-top: 30px;
 }
 .social .social_icon img {
 	width: 80%;
 }
+	
 .container .secondary_header {
 }
 }
+
+
 
 @media (min-width: 321px) and (max-width: 768px) {
 .secondary_header ul li {
@@ -601,7 +606,6 @@ select option { color: black; }
 .columnss {
 	width: 25%;
 	float: left;
-	font-family: "Source Sans Pro";
 	color: #000000;
 	font-size: 24px;
 	line-height: 24px;
