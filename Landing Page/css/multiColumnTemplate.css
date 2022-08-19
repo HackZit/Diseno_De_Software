@@ -514,3 +514,91 @@ select {
 }
 select:focus{ outline: none;}
 select option { color: black; }
+
+.rows {
+	width: 100%;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 200px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	display: inline-block
+}
+.rows.blockDisplay {
+	display: block;
+}
+.rows .column p {
+	padding-left: 10%;
+	padding-right: 10%;
+}
+.columnss {
+	width: 25%;
+	float: left;
+	font-family: "Source Sans Pro";
+	color: #000000;
+	font-size: 24px;
+	line-height: 24px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: justify;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.row .columnss p {
+	padding-left: 10%;
+	padding-right: 10%;
+}
+.container .columnss h4 {
+    text-align: center;
+	font-size: 25px;
+    color: #D13133;
+}
+.columnss {
+	width: 100%;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding-top: 0PX;
+	padding-right: 0PX;
+	padding-bottom: 0PX;
+	padding-left: 0PX;
+}
+.columnss p {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.columnss {
+	width: 100%;
+	margin-top: 6px;
+	margin-right: 0px;
+	margin-bottom: 6px;
+	margin-left: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+}
+.columnss p {
+	padding-left: 14px;
+	padding-right: 14px;
+}
+.columnss {
+	width: 50%;
+	float: left;
+	padding-left: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+}
+.container .columnss p {
+	padding-left: 25px;
+	padding-right: 25px;
+}
