@@ -10,6 +10,63 @@
     padding-right: 0px;
     padding-bottom: 0px;
 }
+body {
+    font-family: 'Manrope';
+}
+.containerHead {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.centered {
+  position: absolute;
+  font-family: 'Manrope';
+  color: white;
+  font-size: 48px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  letter-spacing: 2px; 
+  transform: translate(-50%, -50%);
+	text-shadow: 5px 5px #000000;
+}
+
+.buton{
+    position: absolute;
+    font-family: 'Manrope';
+    width: min-content;
+    height: 48px;
+	top: 85%;
+  	left: 50%;
+	transform: translate(-50%, -40%);
+    flex: 0 0 auto;
+    display: flex;
+    flex-flow: row nowrap;
+    place-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    text-decoration: none;
+    border-radius: 40px;
+    background-color: rgb(255, 255, 255);
+}
+.framer-xNQWl .framer-11l6u52 {
+    position: relative;
+    width: auto;
+    height: auto;
+    flex: 0 0 auto;
+}
+.centeredsub {
+  position: absolute;
+  font-family: 'Manrope';
+  color: white;
+  font-size: 22px;
+  top: 70%;
+  left: 50%;
+  letter-spacing: 2px; 
+  transform: translate(-50%, -50%);
+	text-align: center;
+}
 .containerIndex {
     background-color: #FFFFFF;
     width: 100%;
@@ -81,6 +138,7 @@
 	padding-bottom: 50px;
 	background-color: #1d1d1b;
 	clear: left;
+	font-family: 'Manrope';
 }
 .container .secondary_header ul {
 	margin-top: 0%;
@@ -183,7 +241,7 @@
 .title {
     font-weight: bold;
     font-style: normal;
-    font-family: "Source Sans Pro";
+    font-family: 'Manrope';
     /*text-align: left;*/
     margin-left: 110px;
     color: #1D1D1B;
@@ -446,6 +504,12 @@ body {
 	width: 200px;
 	border-radius: 200px;
 	height: 200px;
+	margin-left: auto;
+}
+.thumbnailMain {
+	width: 450px;
+	border-radius: 10px;
+	height: 300px;
 	margin-left: auto;
 }
 .thumbnail_align {
