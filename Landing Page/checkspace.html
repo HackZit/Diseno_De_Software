@@ -34,12 +34,24 @@
       </ul>
     </nav>
   </header>
-
-  <div>
-	  <h1 style="margin: 30px 30px 30px 30px;">Check available spaces</h1>
-    
-  </div>
-  
+<div class="form">
+		<h1>Check available spots</h1>
+    <form class="bookspot" action="javascript:alert('Available: 153 || Occupied: 69!');">
+      <p class="message"align="left">Parking space:</p>
+		  <select id="parkingid" name="parkingid">
+			<option value="pviva">Viva Parking</option>
+			<option value="pbuenav1">Buenavista 1 Parking</option>
+			<option value="pbuenav2">Buenavista 2 Parking</option>
+			<option value="pmall">Mall Plaza Parking</option>
+		  </select>
+	  
+      <button>Check spots!</button>
+      
+    </form>
+</div>
+	
+	
+	
   <footer class="secondary_header footer">
     <div class="copyright">&copy;2022 - <strong>HackZit</strong></div>
   </footer>
