@@ -34,12 +34,25 @@
       </ul>
     </nav>
   </header>
-
-  <div>
-	  <h1 style="margin: 30px 30px 30px 30px;">Book your space</h1>
-    
+	<div class="form">
+		<h1>Book your space</h1>
+    <form class="bookspot" action="javascript:alert('Spot booked!');">
+      <input type="text" placeholder="Parking Space"/>
+	  <p class="message"align="left">Date of booking</p>
+	  <input type="date" placeholder="Date of booking"/>
+		<p class="message"align="left">Time of booking</p>
+	  <input type="time" placeholder="Time of booking"/>
+		<p class="message"align="left">Choose a car:</p>
+		  <select id="cars" name="cars">
+			<option value="volvo">Volvo</option>
+			<option value="saab">Saab</option>
+			<option value="fiat">Fiat</option>
+			<option value="audi">Audi</option>
+		  </select>
+      <button>Book now!</button>
+      
+    </form>
   </div>
-  
   <footer class="secondary_header footer">
     <div class="copyright">&copy;2022 - <strong>HackZit</strong></div>
   </footer>
