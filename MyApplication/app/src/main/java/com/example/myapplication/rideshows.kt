@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -44,7 +45,7 @@ class rideshows : AppCompatActivity() {
 
         val intent  = getIntent()
         val hora = intent.getStringExtra("hora")
-        //Toast.makeText(this, "intent "+hora, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "intent "+hora, Toast.LENGTH_LONG).show()
         if(hora == "") {
             query()
         }else {
@@ -131,6 +132,7 @@ class rideshows : AppCompatActivity() {
 
 
     fun query() {
+        Log.println(Log.DEBUG,"debug", "Query")
         ActivityCompat.requestPermissions(
             this,
             arrayOf(Manifest.permission.INTERNET),
@@ -148,21 +150,28 @@ class rideshows : AppCompatActivity() {
             var listaRides = listOf(ride)
             listaRides = listaRides.minus(ride)
 
-            val sql = "SELECT  * FROM viajes WHERE ACTIVO='true'"
+            val sql = "SELECT * FROM parking_details"
             val rs = connection?.createStatement()?.executeQuery(sql)
+            val sql1 = "SELECT * FROM parking_locations"
+            val rs1 = connection?.createStatement()?.executeQuery(sql1)
 
             if (rs != null) {
-                while (!rs.isLast) {
-                    rs.next()
-                    //Toast.makeText(this, "comienso " + ride.dir_comienzo, Toast.LENGTH_LONG).show()
-                    var ride = rideshowev(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(8),
-                        R.drawable.coche
-                    )
-                    listaRides = listaRides.plus(ride)
+                if (rs1 != null) {
+                    while (!rs.isLast) {
+                        rs.next()
+                        rs1.next()
+
+                        //Toast.makeText(this, "comienso " + ride.dir_comienzo, Toast.LENGTH_LONG).show()
+                        var ride = rideshowev(
+                            rs1.getString(4),
+                            rs1.getString(2),
+                            rs.getString(2),
+                            rs.getString(3),
+                            R.drawable.coche
+                        )
+                        listaRides = listaRides.plus(ride)
+
+                    }
 
                 }
             }

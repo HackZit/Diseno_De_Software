@@ -89,15 +89,17 @@ class ReviewsHistoryActive : AppCompatActivity(), OnMapReadyCallback,
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map3) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
-
+    /*
         val rides = intent.getSerializableExtra("rides") as rideshowev
-        id = rides.id
+        id = rides.nam
         iddest = rides.dir_destino
         idpart = rides.dir_comienzo
         hora = rides.hora
         findViewById<TextView>(R.id.part).text = idpart
         findViewById<TextView>(R.id.dest).text = iddest
         findViewById<TextView>(R.id.houru).text = hora
+
+     */
         query()
     }
 

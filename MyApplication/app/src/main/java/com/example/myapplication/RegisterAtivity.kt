@@ -83,7 +83,7 @@ class RegisterAtivity : AppCompatActivity() {
             val  date= findViewById<EditText>(R.id.birthdate).text.toString()
             val  pass= findViewById<EditText>(R.id.passwordtxt2).text.toString()
             val sql = "INSERT INTO users (name, lastname, dateofbirth, email, password) VALUES ('$name', '$lname', '$date', '$mail', '$pass')"
-            Log.println(Log.DEBUG,"debug", "SQL " + sql);
+            Log.println(Log.DEBUG,"debug", "SQL " + sql)
             with(connection) {
                 this?.createStatement()?.execute(sql)
                 //this?.commit()

@@ -85,10 +85,10 @@ class ActiveRide : AppCompatActivity(), OnMapReadyCallback,
 
 
         val rides = intent.getSerializableExtra("rides") as rideshowev
-        id = rides.id
-        iddest = rides.dir_destino
-        idpart = rides.dir_comienzo
-        hora = rides.hora
+        id = rides.nam
+        iddest = rides.dir
+        idpart = rides.libres
+        hora = rides.ocupado
         findViewById<TextView>(R.id.LugarPartida).text = idpart
         findViewById<TextView>(R.id.LugarDestino).text = iddest
         findViewById<TextView>(R.id.Hora).text = hora
