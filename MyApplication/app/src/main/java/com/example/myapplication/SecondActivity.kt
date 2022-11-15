@@ -79,23 +79,7 @@ class SecondActivity: AppCompatActivity(), OnMapReadyCallback, OnMyLocationButto
         setContentView(R.layout.activity_second)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         // Get a handle to the fragment and register the callback.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment!!.getMapAsync(this)
-        findViewById<EditText>(R.id.editTextTextPersonName).setOnFocusChangeListener(View.OnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                map.clear()
-                start = getLocationFromAddress(this, findViewById<EditText>(R.id.editTextTextPersonName).text.toString() )
-                Findroutes(start, end)
-            }
-        })
-        findViewById<EditText>(R.id.editTextTextPersonName2).setOnFocusChangeListener(View.OnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                map.clear()
-                end = getLocationFromAddress(this, findViewById<EditText>(R.id.editTextTextPersonName2).text.toString())
-                Findroutes(start, end)
-            }
-        })
+
 
         dir()
     }
