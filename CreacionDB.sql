@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS Payment_Methods(
     cardtype VARCHAR(50) NOT NULL,
     billingaddress VARCHAR(50) NOT NULL,
     cellphonenumber int NOT NULL,
+    cardid ind NOT NULL,
     PRIMARY KEY (cardid)
 );
 
