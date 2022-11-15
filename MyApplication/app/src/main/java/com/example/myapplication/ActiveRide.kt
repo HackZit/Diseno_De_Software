@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
+import android.widget.BaseAdapter
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
@@ -94,33 +95,41 @@ class ActiveRide : AppCompatActivity(), OnMapReadyCallback,
         findViewById<TextView>(R.id.LugarDestino).text = iddest
         findViewById<TextView>(R.id.Hora).text = hora
 
+        connection=(this.application as GlobalClass).getConnection()
 
         // poblacion del dropdown
         val spinnerCarros = findViewById<Spinner>(R.id.dropDownCarros)
-        val adapter = ArrayAdapter.createFromResource(this, R.array.dropDownCarros,android.R.layout.simple_spinner_item)
 
         //seponenlosnombresdeloscarrosdentrodelarray
         val useridsql=(this.application as GlobalClass).getSomeVariable()
         Log.println(Log.DEBUG,"debug", "$useridsql es lo que saca en useridsql")
+
         val sql="SELECT * FROM car_data WHERE userid = $useridsql"
         Log.println(Log.DEBUG,"debug", "$sql es lo que manda")
+
         val rs=connection?.createStatement()?.executeQuery(sql)
         Log.println(Log.DEBUG,"debug", "$rs es lo que responde")
+        val carros: MutableList<String> = ArrayList()
 
         if(rs!=null){
-            Log.println(Log.DEBUG,"debug", "es lo que no ultimo")
+            Log.println(Log.DEBUG,"debug", "entro")
             while(!rs.isLast){
-
                 rs.next()
-                val carBrand=rs.getString(3)
-                val carModel=rs.getString(5)
-                val plate=rs.getString(2)
-                adapter.add("$carBrand $carModel $plate")
+                val carBrand=rs.getString(4)
+                val carModel=rs.getString(6)
+                val plate=rs.getString(3)
+                carros.add("$carBrand $carModel $plate")
 
                 Log.println(Log.DEBUG,"debug", "$carBrand $carModel $plate es lo que pondra")
             }
         }
         //se monta el array en el spoonerrrr
+        Log.println(Log.DEBUG,"debug", "$carros es lo que aaaaaaaaaaaaaaaaaaaaaaaaaah")
+        //EL PUTO ADAPTER NO SE QUIERE DEJAR MODIFICAR AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        val adapter = ArrayAdapter.createFromResource(this, R.array.dropDownCarros,android.R.layout.simple_spinner_item)
+        adapter.add(carros[1])
+        //te odio adapter
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
         spinnerCarros.setAdapter(adapter);
     }
