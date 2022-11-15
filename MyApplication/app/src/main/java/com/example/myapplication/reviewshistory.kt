@@ -44,7 +44,7 @@ class reviewshistory : AppCompatActivity() {
     }
 
     fun query() {
-        ActivityCompat.requestPermissions(
+        /*ActivityCompat.requestPermissions(
             this,
             arrayOf(Manifest.permission.INTERNET),
             PackageManager.PERMISSION_GRANTED
@@ -59,7 +59,7 @@ class reviewshistory : AppCompatActivity() {
 
             val sql2 = "SELECT * FROM viajes"
             val rs2 = connection?.createStatement()?.executeQuery(sql2)
-            var ride = rideshowev("test","test", "test", "test", R.drawable.coche)
+            var ride = rideshowev("test","test", "test", 0,0, R.drawable.coche)
             var listaRides = listOf(ride)
             listaRides = listaRides.minus(ride)
 
@@ -104,7 +104,7 @@ class reviewshistory : AppCompatActivity() {
         } catch (e: SQLException) {
             e.printStackTrace()
             //Toast.makeText(this, "Connected no " + e, Toast.LENGTH_LONG).show()
-        }
+        }*/
     }
 
 

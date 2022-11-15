@@ -92,7 +92,6 @@ class MainActivity : AppCompatActivity() {
                 (this.application as GlobalClass).setSomeVariable(rs.getString(1))
 
                 val intent= Intent(this, rideshows::class.java)
-                intent.putExtra("hora","")
                 startActivity(intent)
             } else {
                 //Toast.makeText(this, "Error $count", Toast.LENGTH_SHORT).show()

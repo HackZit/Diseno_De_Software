@@ -61,7 +61,7 @@ class rideshows : AppCompatActivity() {
             //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
 
 
-            var ride = rideshowev("test","test", "test", "test", R.drawable.coche)
+            var ride = rideshowev("0","test", "test", 0, 0, R.drawable.coche)
             var listaRides = listOf(ride)
             listaRides = listaRides.minus(ride)
 
@@ -78,10 +78,11 @@ class rideshows : AppCompatActivity() {
 
                         //Toast.makeText(this, "comienso " + ride.dir_comienzo, Toast.LENGTH_LONG).show()
                         var ride = rideshowev(
+                            rs1.getString(1),
                             rs1.getString(4),
                             rs1.getString(2),
-                            rs.getString(2),
-                            rs.getString(3),
+                            rs.getInt(2)-rs.getInt(3),
+                            rs.getInt(3),
                             R.drawable.coche
                         )
                         listaRides = listaRides.plus(ride)

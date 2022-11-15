@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -47,9 +48,9 @@ class ActiveRide : AppCompatActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     var names: String? = null
     var dirs: String? = null
-    var freesp: String? = null
-    var notfresp: String? = null
-
+    var freesp: Int? = null
+    var notfresp: Int? = null
+    var parkingsid: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_active_ride)
@@ -67,9 +68,10 @@ class ActiveRide : AppCompatActivity() {
         dirs = rides.dir
         freesp = rides.libres
         notfresp = rides.ocupado
+        parkingsid = rides.parkingid
         findViewById<TextView>(R.id.namep).text = names
         findViewById<TextView>(R.id.address).text = dirs
-        findViewById<TextView>(R.id.frees).text = freesp
+        findViewById<TextView>(R.id.frees).text = freesp.toString()
 
         connection=(this.application as GlobalClass).getConnection()
 
@@ -133,56 +135,36 @@ class ActiveRide : AppCompatActivity() {
         etTime1.setText("$time")
     }
 
-    fun book(view: View){
-        /*
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(Manifest.permission.INTERNET),
-            PackageManager.PERMISSION_GRANTED
-        )
-        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-        StrictMode.setThreadPolicy(policy)
+    fun book(view: View) {
+
         try {
             Class.forName(Classes)
             connection = (this.application as GlobalClass).getConnection()
-            val sql1 = "SELECT * FROM viajes WHERE IDviajes = $id"
-            val rs1 = connection?.createStatement()?.executeQuery(sql1)
-            var pasajeros = ""
-            var numpasajeros = 1
-                if (rs1 != null) {
-                while (!rs1.isLast) {
-                    rs1.next()
-                    pasajeros = rs1.getString(5)
-                    numpasajeros = rs1.getInt(7)+1
-                    if(rs1.getInt(6) == rs1.getInt(7)+1 ){
-                        val sql3= "UPDATE viajes SET activo ='false'  WHERE IDViajes = $id"
-                        with(connection) {
-                            this?.createStatement()?.execute(sql3)
-                            //this?.commit()
-                        }
-                    }
-                }
-            }
-            val  username= (this.application as GlobalClass).getSomeVariable()
-            val sql = "UPDATE viajes SET pasajeros = '$pasajeros,$username' WHERE IDViajes = $id"
-            val sql2 = "UPDATE viajes SET numactual_pasajeros =$numpasajeros  WHERE IDViajes = $id"
+            notfresp = notfresp?.plus(1)
+            val username = (this.application as GlobalClass).getSomeVariable()
+            val sql1 =
+                "UPDATE parking_details Set [numberofspotsoccupied]=$notfresp WHERE parkingsid=$parkingsid"
             with(connection) {
-                this?.createStatement()?.execute(sql)
-                this?.createStatement()?.execute(sql2)
+                this?.createStatement()?.execute(sql1)
                 //this?.commit()
             }
-            button6.setVisibility(View.INVISIBLE)
+
+            val sql3 = "INSERT INTO parking_history(spotid,parkingsid,userid) VALUES ($notfresp,$parkingsid,$username)"
+            with(connection) {
+                this?.createStatement()?.execute(sql3)
+                //this?.commit()
+            }
+
+            val intent= Intent(this, rideshows::class.java)
+            startActivity(intent)
 
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()
             //Toast.makeText(this, "Class fail", Toast.LENGTH_SHORT).show()
-        } catch (e: SQLException) {
-            e.printStackTrace()
-            //Toast.makeText(this, "Connected no " + e, Toast.LENGTH_LONG).show()
         }
-
-         */
     }
+
+
 
     class DatePickerFragment : DialogFragment() {
 

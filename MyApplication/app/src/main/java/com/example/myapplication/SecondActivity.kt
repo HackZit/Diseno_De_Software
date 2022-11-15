@@ -265,7 +265,7 @@ class SecondActivity: AppCompatActivity(), OnMapReadyCallback, OnMyLocationButto
     }
 
     fun createride(view: View?) {
-        ActivityCompat.requestPermissions(
+        /*ActivityCompat.requestPermissions(
             this,
             arrayOf(Manifest.permission.INTERNET),
             PackageManager.PERMISSION_GRANTED
@@ -306,7 +306,7 @@ class SecondActivity: AppCompatActivity(), OnMapReadyCallback, OnMyLocationButto
         } catch (e: SQLException) {
             e.printStackTrace()
             //Toast.makeText(this, "Connected no " + e, Toast.LENGTH_LONG).show()
-        }
+        }*/
     }
 
 

@@ -2,4 +2,4 @@ package com.example.myapplication
 
 import java.io.Serializable
 
-class rideshowev (val nam: String, val dir:String, val libres:String, val ocupado:String, val imagen: Int) : Serializable
+class rideshowev (val parkingid: String,val nam: String, val dir:String, val libres:Int, val ocupado:Int, val imagen: Int) : Serializable
