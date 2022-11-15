@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private var connection: Connection? = null
-    var user = ""
+    var email = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -55,9 +55,9 @@ class MainActivity : AppCompatActivity() {
             connection = DriverManager.getConnection(url, username, password)
             (this.application as GlobalClass).setConnection(connection)
             //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
-            user= findViewById<EditText>(R.id.usertxt).text.toString()
+            email = findViewById<EditText>(R.id.emailtxt).text.toString()
             val  pass= findViewById<EditText>(R.id.passwordtxt).text.toString()
-            val sql = "SELECT COUNT(*) as count FROM users WHERE USERNAME='$user' AND PASSWORD='$pass'"
+            val sql = "SELECT COUNT(*) as count FROM users WHERE email='$email' AND password='$pass'"
             VerifyLogin(sql)
 
         } catch (e: ClassNotFoundException) {
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             val count: Int = rs.getInt("count")
             if (count == 1) {
                 //Toast.makeText(this, "Verificado $count", Toast.LENGTH_SHORT).show()
-                (this.application as GlobalClass).setSomeVariable(user)
+                (this.application as GlobalClass).setSomeVariable(email)
 
                 val intent= Intent(this, rideshows::class.java)
                 intent.putExtra("hora","")
