@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.Manifest
+import android.R
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
@@ -10,8 +11,9 @@ import android.location.Location
 import android.os.Bundle
 import android.os.StrictMode
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -22,7 +24,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -34,7 +35,6 @@ import kotlinx.android.synthetic.main.activity_active_ride.*
 import kotlinx.android.synthetic.main.activity_rideshows.*
 import java.io.IOException
 import java.sql.Connection
-import java.sql.DriverManager
 import java.sql.SQLException
 
 
@@ -96,6 +96,17 @@ class ActiveRide : AppCompatActivity(), OnMapReadyCallback,
         findViewById<TextView>(R.id.LugarDestino).text = iddest
         findViewById<TextView>(R.id.Hora).text = hora
         query()
+
+        // poblacion del dropdown
+        val spinnerCarros = findViewById<Spinner>(R.id.dropDownCarros)
+        val adapter = ArrayAdapter.createFromResource(this, R.array.dropDownCarros, R.layout.simple_spinner_item)
+        //se ponen los nombres de los carros dentro del array
+        while(true){
+            adapter.add("nombre del carro")
+        }
+        //se monta el array en el spoonerrrr
+        adapter.setDropDownViewResource(R.layout.simple_spinner_item)
+        spinnerCarros.setAdapter(adapter);
     }
 
     fun unirse(view: View){

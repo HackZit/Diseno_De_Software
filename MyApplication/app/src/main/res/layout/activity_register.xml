@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#510511"
+    android:background="#3C3F41"
     tools:context=".RegisterAtivity">
 
     <EditText
