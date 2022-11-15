@@ -1,18 +1,25 @@
 package com.example.myapplication
 
 import android.Manifest
+import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import android.view.View
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.DialogFragment
+import kotlinx.android.synthetic.main.activity_register.*
 import java.sql.Connection
-import java.sql.DriverManager
 import java.sql.SQLException
+import java.util.*
+
 
 class RegisterAtivity : AppCompatActivity() {
 
@@ -39,6 +46,22 @@ class RegisterAtivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        birthdate.setOnClickListener {
+            showDatePickerDialog()
+        }
+    }
+
+
+    private fun showDatePickerDialog() {
+        val newFragment = DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            val dayStr = day
+            val monthStr = (month + 1)
+
+            val selectedDate = "$monthStr/$dayStr/$year"
+            birthdate.setText(selectedDate)
+        })
+
+        newFragment.show(supportFragmentManager, "datePicker")
     }
 
 
@@ -54,16 +77,17 @@ class RegisterAtivity : AppCompatActivity() {
             Class.forName(Classes)
             connection = (this.application as GlobalClass).getConnection()
             //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
-            val  user= findViewById<EditText>(R.id.usertxt8).text.toString()
             val  name= findViewById<EditText>(R.id.usertxt4).text.toString()
             val  lname= findViewById<EditText>(R.id.usertxt5).text.toString()
             val  mail= findViewById<EditText>(R.id.usertxt6).text.toString()
-            val  phone= findViewById<EditText>(R.id.usertxt7).text.toString()
+            val  date= findViewById<EditText>(R.id.birthdate).text.toString()
             val  pass= findViewById<EditText>(R.id.passwordtxt2).text.toString()
-            val sql = "INSERT INTO users (USERNAME, NAME, LAST_NAME, EMAIL, PHONE, PASSWORD) VALUES ('$user','$name', '$lname', '$mail', $phone, '$pass')"
+            val sql = "INSERT INTO users (name, lastname, dateofbirth, email, password) VALUES ('$name', '$lname', '$date', '$mail', '$pass')"
+            Log.println(Log.DEBUG,"debug", "SQL " + sql);
             with(connection) {
                 this?.createStatement()?.execute(sql)
                 //this?.commit()
+                Log.println(Log.DEBUG,"debug", "Conectado " + sql);
 
             }
             val intent= Intent(this, MainActivity::class.java)
@@ -74,6 +98,31 @@ class RegisterAtivity : AppCompatActivity() {
         } catch (e: SQLException) {
             e.printStackTrace()
             //Toast.makeText(this, "Connected no " + e, Toast.LENGTH_LONG).show()
+        }
+
+
+    }
+
+}
+
+class DatePickerFragment : DialogFragment() {
+
+    private var listener: DatePickerDialog.OnDateSetListener? = null
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        return DatePickerDialog(requireActivity(), listener, year, month, day)
+    }
+
+    companion object {
+        fun newInstance(listener: DatePickerDialog.OnDateSetListener): DatePickerFragment {
+            val fragment = DatePickerFragment()
+            fragment.listener = listener
+            return fragment
         }
     }
 

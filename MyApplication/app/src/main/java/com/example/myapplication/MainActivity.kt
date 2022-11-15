@@ -70,6 +70,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun registerscreen(view: View?) {
+
+
         val intent= Intent(this, RegisterAtivity::class.java)
         startActivity(intent)
     }
