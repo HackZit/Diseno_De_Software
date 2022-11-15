@@ -1,1 +1,1 @@
-INSERT INTO users VALUES(1,'christian','manga','11/07/2001','eee@hotmail.com','prueba')
+INSERT INTO parking_locations VALUES(1,'carrera 51 # 76 - 122',3200000,'EL PARKING')

@@ -1,41 +1,37 @@
 CREATE TABLE IF NOT EXISTS users(
-    userid int NOT NULL,
+    userid serial primary key,
     name VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
     dateofbirth date NOT NULL,
     email VARCHAR(50) NOT NULL,
-    password VARCHAR(50) NOT NULL,
-    PRIMARY KEY (userid)
+    password VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS factura(
-    idfactura int NOT NULL,
+    idfactura serial primary key,
     fecha timestamp NOT NULL,
     valor float NOT NULL,
     userid int NOT NULL,
     cardid int NOT NULL,
-    descripcion VARCHAR(50) NOT NULL,
-    PRIMARY KEY (idfactura)
+    descripcion VARCHAR(50) NOT NULL
     
 );
 
 CREATE TABLE IF NOT EXISTS car_data(
-    carid int NOT NULL,
+    carid serial primary key,
     userid int NOT NULL,
     licenseplate VARCHAR(50) NOT NULL,
     carbrand VARCHAR(50) NOT NULL,
     typeofcar VARCHAR(50) NOT NULL,
-    carmodel VARCHAR(50) NOT NULL,
-    PRIMARY KEY (carid)
+    carmodel VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS parking_spot(
-    spotid int NOT NULL,
+    spotid serial primary key,
     carid int NOT NULL,
     parktime time NOT NULL,
     parkinghistoryid int NOT NULL,
-    parkingsid int NOT NULL,
-    PRIMARY KEY (spotid)
+    parkingsid int NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS payment_methods(
@@ -46,9 +42,8 @@ CREATE TABLE IF NOT EXISTS payment_methods(
     cvv int NOT NULL,
     cardtype VARCHAR(50) NOT NULL,
     billingaddress VARCHAR(50) NOT NULL,
-    cellphonenumber int NOT NULL,
-    cardid int NOT NULL,
-    PRIMARY KEY (cardid)
+    cellphonenumber VARCHAR(10) NOT NULL,
+    cardid serial primary key
 );
 
 CREATE TABLE IF NOT EXISTS order_history(
@@ -60,27 +55,26 @@ CREATE TABLE IF NOT EXISTS order_history(
 );
 
 CREATE TABLE IF NOT EXISTS parking_history(
-    parkinghistoryid int NOT NULL,
+    parkinghistoryid serial primary key,
     spotid int NOT NULL,
     userid int NOT NULL,
-    parkingsid int NOT NULL,
-    PRIMARY KEY (parkinghistoryid)
+    parkingsid int NOT NULL
 
 );
 
 CREATE TABLE IF NOT EXISTS parking_details(
     parkingsid int NOT NULL,
     numberofspots int NOT NULL,
+    numberofspotsoccupied int NOT NULL,
     parkinghours time NOT NULL,
-    PRIMARY KEY (parkingsid)
+    PRIMARY KEY(parkingsid)
 );
 
 CREATE TABLE IF NOT EXISTS parking_locations(
-    parkingsid int NOT NULL,
+    parkingsid serial primary key,
     address VARCHAR(50) NOT NULL,
-    contactnumber int NOT NULL,
-    businessname VARCHAR(50) NOT NULL,
-    PRIMARY KEY (parkingsid)
+    contactnumber VARCHAR(10) NOT NULL,
+    businessname VARCHAR(50) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS client_cloud(
 
