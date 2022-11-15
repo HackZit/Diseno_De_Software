@@ -90,3 +90,6 @@ CREATE TABLE IF NOT EXISTS parking_locations(
     businessname VARCHAR(50) NOT NULL,
     PRIMARY KEY (parkingsid)
 );
+CREATE TABLE IF NOT EXISTS client_cloud(
+
+);
