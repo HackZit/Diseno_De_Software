@@ -11,12 +11,12 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TABLE IF NOT EXISTS factura(
     idfactura int NOT NULL,
     fecha timestamp NOT NULL,
-    valor double NOT NULL,
+    valor float NOT NULL,
     userid int NOT NULL,
     cardid int NOT NULL,
     descripcion VARCHAR(50) NOT NULL,
-    PRIMARY KEY (idfactura),
-    FOREIGN KEY (cardid) REFERENCES Payment_Methods (cardid)
+    PRIMARY KEY (idfactura)
+    
 );
 
 CREATE TABLE IF NOT EXISTS car_data(
@@ -26,8 +26,7 @@ CREATE TABLE IF NOT EXISTS car_data(
     carbrand VARCHAR(50) NOT NULL,
     typeofcar VARCHAR(50) NOT NULL,
     carmodel VARCHAR(50) NOT NULL,
-    PRIMARY KEY (carid),
-    FOREIGN KEY (userid) REFERENCES users (userid)
+    PRIMARY KEY (carid)
 );
 
 CREATE TABLE IF NOT EXISTS parking_spot(
@@ -36,12 +35,10 @@ CREATE TABLE IF NOT EXISTS parking_spot(
     parktime time NOT NULL,
     parkinghistoryid int NOT NULL,
     parkingsid int NOT NULL,
-    PRIMARY KEY (spotid),
-    FOREIGN KEY (carid) REFERENCES car_data (carid),
-    FOREIGN KEY (parkingsid) REFERENCES parking_details (parkingsid)
+    PRIMARY KEY (spotid)
 );
 
-CREATE TABLE IF NOT EXISTS Payment_Methods(
+CREATE TABLE IF NOT EXISTS payment_methods(
     userid int NOT NULL,
     cardholder VARCHAR(50) NOT NULL,
     cardnumber int NOT NULL,
@@ -51,18 +48,15 @@ CREATE TABLE IF NOT EXISTS Payment_Methods(
     billingaddress VARCHAR(50) NOT NULL,
     cellphonenumber int NOT NULL,
     cardid int NOT NULL,
-    PRIMARY KEY (cardid),
-    FOREIGN KEY (userid) REFERENCES users (userid)
+    PRIMARY KEY (cardid)
 );
 
 CREATE TABLE IF NOT EXISTS order_history(
     idfactura int NOT NULL,
     userid int NOT NULL,
     fecha date NOT NULL,
-    valor double NOT NULL,
-    parkinghistoryid int NOT NULL,
-    FOREIGN KEY (idfactura) REFERENCES factura (idfactura),
-    FOREIGN KEY (userid) REFERENCES users (userid)
+    valor float NOT NULL,
+    parkinghistoryid int NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS parking_history(
@@ -71,9 +65,7 @@ CREATE TABLE IF NOT EXISTS parking_history(
     userid int NOT NULL,
     parkingsid int NOT NULL,
     PRIMARY KEY (parkinghistoryid)
-    FOREIGN KEY (spotid) REFERENCES parking_spot (spotid),
-    FOREIGN KEY (parkingsid) REFERENCES parking_details (parkingsid),
-    FOREIGN KEY (userid) REFERENCES users (userid)
+
 );
 
 CREATE TABLE IF NOT EXISTS parking_details(
@@ -93,3 +85,31 @@ CREATE TABLE IF NOT EXISTS parking_locations(
 CREATE TABLE IF NOT EXISTS client_cloud(
 
 );
+
+ALTER TABLE factura
+   ADD FOREIGN KEY (cardid) REFERENCES Payment_Methods (cardid);
+
+
+ALTER TABLE car_data
+    ADD FOREIGN KEY (userid) REFERENCES users (userid);
+
+
+ALTER TABLE parking_spot
+    ADD FOREIGN KEY (carid) REFERENCES car_data (carid),
+    ADD FOREIGN KEY (parkingsid) REFERENCES parking_details (parkingsid);
+
+
+ALTER TABLE payment_methods
+    ADD FOREIGN KEY (userid) REFERENCES users (userid);
+
+
+ALTER TABLE order_history
+    ADD FOREIGN KEY (idfactura) REFERENCES factura (idfactura),
+    ADD FOREIGN KEY (userid) REFERENCES users (userid);
+
+
+ALTER TABLE parking_history
+    ADD FOREIGN KEY (spotid) REFERENCES parking_spot (spotid),
+    ADD FOREIGN KEY (parkingsid) REFERENCES parking_details (parkingsid),
+    ADD FOREIGN KEY (userid) REFERENCES users (userid);
+

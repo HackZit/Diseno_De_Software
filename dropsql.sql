@@ -1,0 +1,10 @@
+DROP TABLE users;
+DROP TABLE factura;
+DROP TABLE car_data;
+DROP TABLE parking_spot;
+DROP TABLE Payment_Methods;
+DROP TABLE order_history;
+DROP TABLE parking_history;
+DROP TABLE client_cloud;
+DROP TABLE parking_details;
+DROP TABLE parking_locations;
