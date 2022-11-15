@@ -9,9 +9,7 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
-import android.widget.DatePicker
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
@@ -46,7 +44,7 @@ class RegisterAtivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        birthdate.setOnClickListener {
+        resdate.setOnClickListener {
             showDatePickerDialog()
         }
     }
@@ -58,7 +56,7 @@ class RegisterAtivity : AppCompatActivity() {
             val monthStr = (month + 1)
 
             val selectedDate = "$monthStr/$dayStr/$year"
-            birthdate.setText(selectedDate)
+            resdate.setText(selectedDate)
         })
 
         newFragment.show(supportFragmentManager, "datePicker")
@@ -80,7 +78,7 @@ class RegisterAtivity : AppCompatActivity() {
             val  name= findViewById<EditText>(R.id.usertxt4).text.toString()
             val  lname= findViewById<EditText>(R.id.usertxt5).text.toString()
             val  mail= findViewById<EditText>(R.id.usertxt6).text.toString()
-            val  date= findViewById<EditText>(R.id.birthdate).text.toString()
+            val  date= findViewById<EditText>(R.id.resdate).text.toString()
             val  pass= findViewById<EditText>(R.id.passwordtxt2).text.toString()
             val sql = "INSERT INTO users (name, lastname, dateofbirth, email, password) VALUES ('$name', '$lname', '$date', '$mail', '$pass')"
             Log.println(Log.DEBUG,"debug", "SQL " + sql)

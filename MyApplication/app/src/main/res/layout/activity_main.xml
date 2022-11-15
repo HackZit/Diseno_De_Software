@@ -26,7 +26,7 @@
         android:backgroundTint="#FFFFFF"
         android:onClick="start"
         android:text="Log In / Sign up"
-        android:textColor="#510511"
+        android:textColor="#CF0C2B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.596"
