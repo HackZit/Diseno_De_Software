@@ -1,7 +1,6 @@
 package com.example.myapplication
 
 import android.Manifest
-import android.R
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
@@ -83,9 +82,7 @@ class ActiveRide : AppCompatActivity(), OnMapReadyCallback,
         setContentView(R.layout.activity_active_ride)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         // Get a handle to the fragment and register the callback.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map2) as SupportMapFragment?
-        mapFragment!!.getMapAsync(this)
+
 
         val rides = intent.getSerializableExtra("rides") as rideshowev
         id = rides.id
@@ -96,7 +93,7 @@ class ActiveRide : AppCompatActivity(), OnMapReadyCallback,
         findViewById<TextView>(R.id.LugarDestino).text = iddest
         findViewById<TextView>(R.id.Hora).text = hora
         query()
-
+        /*
         // poblacion del dropdown
         val spinnerCarros = findViewById<Spinner>(R.id.dropDownCarros)
         val adapter = ArrayAdapter.createFromResource(this, R.array.dropDownCarros, R.layout.simple_spinner_item)
@@ -107,6 +104,8 @@ class ActiveRide : AppCompatActivity(), OnMapReadyCallback,
         //se monta el array en el spoonerrrr
         adapter.setDropDownViewResource(R.layout.simple_spinner_item)
         spinnerCarros.setAdapter(adapter);
+
+         */
     }
 
     fun unirse(view: View){
@@ -203,9 +202,8 @@ class ActiveRide : AppCompatActivity(), OnMapReadyCallback,
 
             }
 
-            val recycle = findViewById<RecyclerView>(R.id.RecyclerViewPersonas)
+
             val adapter = TextPersonasAdapter(DetailsRide)
-            recycle.adapter = adapter
 
 
 

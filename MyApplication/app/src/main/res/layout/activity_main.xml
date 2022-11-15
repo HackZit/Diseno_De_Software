@@ -7,22 +7,17 @@
     android:background="#3C3F41"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/passwordtxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="numberPassword"
-        android:minHeight="48dp"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="232dp"
+        android:layout_height="205dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.452" />
+        app:layout_constraintVertical_bias="0.146"
+        app:srcCompat="@drawable/u_parking" />
 
     <Button
         android:id="@+id/button"
@@ -30,38 +25,22 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#FFFFFF"
         android:onClick="start"
-        android:text="Log In"
+        android:text="Log In / Sign up"
         android:textColor="#510511"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.668"
+        app:layout_constraintHorizontal_bias="0.596"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.622" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#FFFFFF"
-        android:onClick="registerscreen"
-        android:text="Sign Up"
-        android:textColor="#510511"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.671"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.733" />
+        app:layout_constraintVertical_bias="0.705" />
 
     <EditText
-        android:id="@+id/usertxt"
+        android:id="@+id/passwordtxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#000000"
         android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName"
+        android:hint="Password"
+        android:inputType="textPassword"
         android:minHeight="48dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
@@ -70,7 +49,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.342" />
+        app:layout_constraintVertical_bias="0.541" />
 
     <TextView
         android:id="@+id/textView"
@@ -83,18 +62,24 @@
         app:layout_constraintHorizontal_bias="0.335"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.515" />
+        app:layout_constraintVertical_bias="0.601" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="232dp"
-        android:layout_height="205dp"
+    <EditText
+        android:id="@+id/emailtxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.03"
-        app:srcCompat="@drawable/u_parking" />
+        app:layout_constraintVertical_bias="0.431" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
