@@ -11,4 +11,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="location_permission_denied">Permiso Denegado</string>
     <string name="permission_required_toast">Se requiere permisos</string>
+    <string-array name="dropDownCarros">
+        <item>Vocho</item>
+    </string-array>
 </resources>
