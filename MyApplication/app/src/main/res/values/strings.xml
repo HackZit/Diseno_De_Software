@@ -13,5 +13,7 @@
     <string name="permission_required_toast">Se requiere permisos</string>
     <string-array name="dropDownCarros">
         <item>Vocho</item>
+        <item>Prado</item>
+        <item>mercho</item>
     </string-array>
 </resources>

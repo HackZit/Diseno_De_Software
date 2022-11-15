@@ -9,6 +9,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -92,20 +93,36 @@ class ActiveRide : AppCompatActivity(), OnMapReadyCallback,
         findViewById<TextView>(R.id.LugarPartida).text = idpart
         findViewById<TextView>(R.id.LugarDestino).text = iddest
         findViewById<TextView>(R.id.Hora).text = hora
-        query()
-        /*
+
+
         // poblacion del dropdown
         val spinnerCarros = findViewById<Spinner>(R.id.dropDownCarros)
-        val adapter = ArrayAdapter.createFromResource(this, R.array.dropDownCarros, R.layout.simple_spinner_item)
-        //se ponen los nombres de los carros dentro del array
-        while(true){
-            adapter.add("nombre del carro")
+        val adapter = ArrayAdapter.createFromResource(this, R.array.dropDownCarros,android.R.layout.simple_spinner_item)
+
+        //seponenlosnombresdeloscarrosdentrodelarray
+        val useridsql=(this.application as GlobalClass).getSomeVariable()
+        Log.println(Log.DEBUG,"debug", "$useridsql es lo que saca en useridsql")
+        val sql="SELECT * FROM car_data WHERE userid = $useridsql"
+        Log.println(Log.DEBUG,"debug", "$sql es lo que manda")
+        val rs=connection?.createStatement()?.executeQuery(sql)
+        Log.println(Log.DEBUG,"debug", "$rs es lo que responde")
+
+        if(rs!=null){
+            Log.println(Log.DEBUG,"debug", "es lo que no ultimo")
+            while(!rs.isLast){
+
+                rs.next()
+                val carBrand=rs.getString(3)
+                val carModel=rs.getString(5)
+                val plate=rs.getString(2)
+                adapter.add("$carBrand $carModel $plate")
+
+                Log.println(Log.DEBUG,"debug", "$carBrand $carModel $plate es lo que pondra")
+            }
         }
         //se monta el array en el spoonerrrr
-        adapter.setDropDownViewResource(R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
         spinnerCarros.setAdapter(adapter);
-
-         */
     }
 
     fun unirse(view: View){
@@ -146,66 +163,6 @@ class ActiveRide : AppCompatActivity(), OnMapReadyCallback,
                 //this?.commit()
             }
             button6.setVisibility(View.INVISIBLE)
-            query()
-        } catch (e: ClassNotFoundException) {
-            e.printStackTrace()
-            //Toast.makeText(this, "Class fail", Toast.LENGTH_SHORT).show()
-        } catch (e: SQLException) {
-            e.printStackTrace()
-            //Toast.makeText(this, "Connected no " + e, Toast.LENGTH_LONG).show()
-        }
-    }
-
-    fun query() {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(Manifest.permission.INTERNET),
-            PackageManager.PERMISSION_GRANTED
-        )
-        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-        StrictMode.setThreadPolicy(policy)
-        try {
-            Class.forName(Classes)
-            connection = (this.application as GlobalClass).getConnection()
-            //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
-            val  username= (this.application as GlobalClass).getSomeVariable()
-
-            var person = persona("test", "test")
-            var DetailsRide = listOf(person)
-            DetailsRide = DetailsRide.minus(person)
-
-            val sql1 = "SELECT Pasajeros FROM viajes WHERE idviajes = $id"
-            val rs1 = connection?.createStatement()?.executeQuery(sql1)
-            var list1: List<String>? = null
-            if (rs1 != null) {
-                rs1.next()
-                list1 = rs1.getString(1).split(",")
-                list1.forEach {
-                    val sql = "SELECT * FROM users WHERE username = '$it'"
-                    val rs = connection?.createStatement()?.executeQuery(sql)
-                    println("NOMBRE DE USUARI: " + it)
-                    if(it == username){
-                        button6.setVisibility(View.INVISIBLE)
-                    }
-                    if (rs != null) {
-                        rs.next()
-
-                        var person = persona(
-                            rs.getString(2)+ " " + rs.getString(3),
-                            rs.getString(5)
-                        )
-                        //Toast.makeText(this, "comienso " + person.fullname, Toast.LENGTH_LONG).show()
-                        DetailsRide = DetailsRide.plus(person)
-
-                    }
-                }
-
-            }
-
-
-            val adapter = TextPersonasAdapter(DetailsRide)
-
-
 
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()

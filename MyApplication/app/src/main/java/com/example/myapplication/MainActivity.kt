@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
             val count: Int = rs.getInt("count")
             if (count == 1) {
                 //Toast.makeText(this, "Verificado $count", Toast.LENGTH_SHORT).show()
-                (this.application as GlobalClass).setSomeVariable(email)
+                (this.application as GlobalClass).setSomeVariable(rs.getString(1))
 
                 val intent= Intent(this, rideshows::class.java)
                 intent.putExtra("hora","")
