@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS factura(
     userid int NOT NULL,
     cardid int NOT NULL,
     descripcion VARCHAR(50) NOT NULL,
-    PRIMARY KEY (idfactura)
+    PRIMARY KEY (idfactura),
+    FOREIGN KEY (cardid) REFERENCES Payment_Methods (cardid)
 );
 
 CREATE TABLE IF NOT EXISTS car_data(
@@ -25,7 +26,8 @@ CREATE TABLE IF NOT EXISTS car_data(
     carbrand VARCHAR(50) NOT NULL,
     typeofcar VARCHAR(50) NOT NULL,
     carmodel VARCHAR(50) NOT NULL,
-    PRIMARY KEY (carid)
+    PRIMARY KEY (carid),
+    FOREIGN KEY (userid) REFERENCES users (userid)
 );
 
 CREATE TABLE IF NOT EXISTS parking_spot(
@@ -34,7 +36,9 @@ CREATE TABLE IF NOT EXISTS parking_spot(
     parktime time NOT NULL,
     parkinghistoryid int NOT NULL,
     parkingsid int NOT NULL,
-    PRIMARY KEY (spotid)
+    PRIMARY KEY (spotid),
+    FOREIGN KEY (carid) REFERENCES car_data (carid),
+    FOREIGN KEY (parkingsid) REFERENCES parking_details (parkingsid)
 );
 
 CREATE TABLE IF NOT EXISTS Payment_Methods(
@@ -46,8 +50,9 @@ CREATE TABLE IF NOT EXISTS Payment_Methods(
     cardtype VARCHAR(50) NOT NULL,
     billingaddress VARCHAR(50) NOT NULL,
     cellphonenumber int NOT NULL,
-    cardid ind NOT NULL,
-    PRIMARY KEY (cardid)
+    cardid int NOT NULL,
+    PRIMARY KEY (cardid),
+    FOREIGN KEY (userid) REFERENCES users (userid)
 );
 
 CREATE TABLE IF NOT EXISTS order_history(
@@ -56,7 +61,8 @@ CREATE TABLE IF NOT EXISTS order_history(
     fecha date NOT NULL,
     valor double NOT NULL,
     parkinghistoryid int NOT NULL,
-    PRIMARY KEY (spotid)
+    FOREIGN KEY (idfactura) REFERENCES factura (idfactura),
+    FOREIGN KEY (userid) REFERENCES users (userid)
 );
 
 CREATE TABLE IF NOT EXISTS parking_history(
@@ -65,6 +71,9 @@ CREATE TABLE IF NOT EXISTS parking_history(
     userid int NOT NULL,
     parkingsid int NOT NULL,
     PRIMARY KEY (parkinghistoryid)
+    FOREIGN KEY (spotid) REFERENCES parking_spot (spotid),
+    FOREIGN KEY (parkingsid) REFERENCES parking_details (parkingsid),
+    FOREIGN KEY (userid) REFERENCES users (userid)
 );
 
 CREATE TABLE IF NOT EXISTS parking_details(
