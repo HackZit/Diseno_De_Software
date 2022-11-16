@@ -8,10 +8,7 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.TimePicker
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -51,6 +48,8 @@ class ActiveRide : AppCompatActivity() {
     var freesp: Int? = null
     var notfresp: Int? = null
     var parkingsid: String? = null
+    var carros: ArrayList<String>? = null
+    var carsid: ArrayList<Int>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_active_ride)
@@ -87,7 +86,8 @@ class ActiveRide : AppCompatActivity() {
 
         val rs=connection?.createStatement()?.executeQuery(sql)
         Log.println(Log.DEBUG,"debug", "$rs es lo que responde")
-        val carros = ArrayList<String>()
+        carros = ArrayList<String>()
+        carsid = ArrayList<Int>()
 
         if(rs!=null){
             Log.println(Log.DEBUG,"debug", "entro")
@@ -96,8 +96,8 @@ class ActiveRide : AppCompatActivity() {
                 val carBrand=rs.getString(4)
                 val carModel=rs.getString(6)
                 val plate=rs.getString(3)
-                carros.add("$carBrand $carModel $plate")
-
+                carros!!.add("$carBrand $carModel $plate")
+                carsid!!.add(rs.getInt(1))
                 Log.println(Log.DEBUG,"debug", "$carBrand $carModel $plate es lo que pondra")
             }
         }
@@ -105,7 +105,7 @@ class ActiveRide : AppCompatActivity() {
         // Creating adapter for spinner
         val dataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
             this,
-            android.R.layout.simple_spinner_item, carros
+            android.R.layout.simple_spinner_item, carros!!
         )
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -142,14 +142,37 @@ class ActiveRide : AppCompatActivity() {
             connection = (this.application as GlobalClass).getConnection()
             notfresp = notfresp?.plus(1)
             val username = (this.application as GlobalClass).getSomeVariable()
-            val sql1 =
-                "UPDATE parking_details Set [numberofspotsoccupied]=$notfresp WHERE parkingsid=$parkingsid"
+            val sql1 ="UPDATE parking_details Set numberofspotsoccupied=$notfresp WHERE parkingsid=$parkingsid"
             with(connection) {
                 this?.createStatement()?.execute(sql1)
+                Log.println(Log.DEBUG,"debug", "sql1"+sql1)
                 //this?.commit()
             }
 
-            val sql3 = "INSERT INTO parking_history(spotid,parkingsid,userid) VALUES ($notfresp,$parkingsid,$username)"
+            val sql4 = "SELECT COUNT(*) as count FROM parking_history"
+            val rs = connection?.createStatement()?.executeQuery(sql4)
+
+            var phistory = 0
+            if (rs != null) {
+                rs.next()
+                val count: Int = rs.getInt("count")
+                phistory = count + 1
+            }
+
+            val spinnerCarros = findViewById<Spinner>(R.id.dropDownCarros)
+            val pid = Integer.parseInt(parkingsid)
+            val carid=carsid?.get(spinnerCarros.selectedItemPosition)
+            val  time = findViewById<EditText>(R.id.etTime1).text.toString()
+            Log.println(Log.DEBUG,"debug", "carsid"+carid)
+            val sql2 = "INSERT INTO parking_spot(spotid, carid ,parktime ,parkinghistoryid, parkingsid) VALUES ($notfresp, $carid,'$time',$phistory,$pid)"
+            with(connection) {
+                this?.createStatement()?.execute(sql2)
+                Log.println(Log.DEBUG,"debug", "sql2"+sql2)
+                //this?.commit()
+            }
+            val user = Integer.parseInt(username)
+
+            val sql3 = "INSERT INTO parking_history(spotid,userid,parkingsid) VALUES ($notfresp,$user,$pid)"
             with(connection) {
                 this?.createStatement()?.execute(sql3)
                 //this?.commit()

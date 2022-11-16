@@ -65,9 +65,9 @@ class rideshows : AppCompatActivity() {
             var listaRides = listOf(ride)
             listaRides = listaRides.minus(ride)
 
-            val sql = "SELECT * FROM parking_details"
+            val sql = "SELECT * FROM parking_details ORDER BY parkingsid"
             val rs = connection?.createStatement()?.executeQuery(sql)
-            val sql1 = "SELECT * FROM parking_locations"
+            val sql1 = "SELECT * FROM parking_locations ORDER BY parkingsid"
             val rs1 = connection?.createStatement()?.executeQuery(sql1)
 
             if (rs != null) {
