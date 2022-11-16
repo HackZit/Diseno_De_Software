@@ -4,15 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#56FFFFFF"
+    android:backgroundTint="#3C3F41"
+    android:contentDescription="Vehicle"
     tools:context=".ActiveRide">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="232dp"
+        android:layout_height="205dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.804"
+        app:srcCompat="@drawable/u_parking" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Reserva!"
-        android:textSize="34sp"
         android:textColor="#000000"
+        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.107"
@@ -54,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="frees"
-        android:textColor="#000000"
+        android:textColor="#4CAF50"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,8 +83,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nombre:"
-        android:textSize="16sp"
         android:textColor="#000000"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.131"
@@ -82,8 +97,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Direccion:"
-        android:textSize="16sp"
         android:textColor="#000000"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.134"
@@ -118,21 +133,24 @@
 
     <Spinner
         android:id="@+id/dropDownCarros"
-        android:layout_width="319dp"
+        android:layout_width="312dp"
         android:layout_height="38dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="56dp"
         android:layout_marginEnd="1dp"
+        android:layout_marginBottom="18dp"
         android:textColor="#000000"
         android:textColorHint="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/resdate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintHorizontal_bias="0.453"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/resdate"
-        android:layout_width="273dp"
+        android:layout_width="312dp"
         android:layout_height="43dp"
         android:clickable="true"
         android:ems="10"
@@ -145,24 +163,24 @@
         android:textColorHint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.449"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
+        app:layout_constraintVertical_bias="0.386" />
 
     <EditText
         android:id="@+id/etTime1"
         android:layout_width="312dp"
         android:layout_height="43dp"
         android:layout_margin="24dp"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="16dp"
         android:clickable="false"
         android:focusable="false"
         android:hint="Time of booking"
         android:textColor="#000000"
         android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/resdate" />
 
