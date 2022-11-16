@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS car_data(
 );
 
 CREATE TABLE IF NOT EXISTS parking_spot(
-    spotid serial primary key,
+    spotid int NOT NULL,
     carid int NOT NULL,
     parktime time NOT NULL,
     parkinghistoryid int NOT NULL,
@@ -63,11 +63,10 @@ CREATE TABLE IF NOT EXISTS parking_history(
 );
 
 CREATE TABLE IF NOT EXISTS parking_details(
-    parkingsid int NOT NULL,
+    parkingsid serial primary key,
     numberofspots int NOT NULL,
     numberofspotsoccupied int NOT NULL,
-    parkinghours time NOT NULL,
-    PRIMARY KEY(parkingsid)
+    parkinghours time NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS parking_locations(
@@ -103,7 +102,6 @@ ALTER TABLE order_history
 
 
 ALTER TABLE parking_history
-    ADD FOREIGN KEY (spotid) REFERENCES parking_spot (spotid),
     ADD FOREIGN KEY (parkingsid) REFERENCES parking_details (parkingsid),
     ADD FOREIGN KEY (userid) REFERENCES users (userid);
 
