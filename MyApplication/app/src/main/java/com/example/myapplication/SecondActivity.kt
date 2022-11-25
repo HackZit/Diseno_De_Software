@@ -107,7 +107,7 @@ class SecondActivity: AppCompatActivity() {
                 val spotID = rs.getString(1)
                 val parkDate = rs.getString(6)
                 val parkTime = rs.getString(3)
-                parkings!!.add("$parkname $parkDate $parkTime #$spotID")
+                parkings!!.add("$parkname|$parkDate $parkTime #$spotID")
                 Log.println(Log.DEBUG, "debug", "$parkname $parkDate #$spotID es lo que pondra park")
             }
         }
@@ -154,19 +154,60 @@ class SecondActivity: AppCompatActivity() {
         // attaching data adapter to spinner
         spinnerCard.setAdapter(dataAdapter2)
     }
-    fun selectPark (){
+    var selSpotID: String = ""
+    var selSpotname: String = ""
 
-        dropDownBooking.selectedItemPosition
+    fun selectPark(view: View){
+
+        val spinnerParking = findViewById<Spinner>(R.id.dropDownBooking)
+        selSpotID = spinnerParking.selectedItem.toString().substringAfter("#")
+        selSpotname = spinnerParking.selectedItem.toString().substringBefore("|")
+
+        connection = (this.application as GlobalClass).getConnection()
+
+        //se ponen los nombres de los parkeaderos dentro del array
         val useridsql=(this.application as GlobalClass).getSomeVariable()
         Log.println(Log.DEBUG,"debug", "$useridsql es lo que saca en useridsql")
 
-        val sql="SELECT * FROM parking_spot WHERE userid = $useridsql AND isactive = 1"
-        Log.println(Log.DEBUG,"debug", "$sql es lo que manda")
+        namebooked.setText(selSpotname)
 
-        val rs=connection?.createStatement()?.executeQuery(sql)
-        Log.println(Log.DEBUG,"debug", "$rs es lo que responde")
+        val sql2 = "SELECT * FROM parking_locations WHERE businessname  = '$selSpotname'"
+        Log.println(Log.DEBUG, "debug", "$sql2 es lo que manda2")
+
+        val rs2 = connection?.createStatement()?.executeQuery(sql2)
+        Log.println(Log.DEBUG, "debug", "$rs2 es lo que responde2")
+
+        if (rs2 != null) {
+            rs2.next()
+            addressbooked.setText(rs2.getString(2))
+            totalprice.setText(rs2.getString(5))
+        }
 
 
+        val sql3 = "SELECT * FROM parking_spot WHERE spotid = $selSpotID  AND isactive = '1'"
+        Log.println(Log.DEBUG, "debug", "$sql3 es lo que manda3")
+
+        val rs3 = connection?.createStatement()?.executeQuery(sql3)
+        Log.println(Log.DEBUG, "debug", "$rs3 es lo que responde3")
+
+        if (rs3 != null) {
+            rs3.next()
+            Datebooked.setText(rs3.getString(6))
+            timebook.setText(rs3.getString(3))
+
+        }
+
+
+        val carid = rs3?.getString(2)
+        val sql4 = "SELECT * FROM car_data WHERE carid = $carid"
+        Log.println(Log.DEBUG, "debug", "$sql4 es lo que manda4")
+
+        val rs4 = connection?.createStatement()?.executeQuery(sql4)
+        Log.println(Log.DEBUG, "debug", "$rs4 es lo que responde4")
+
+        if (rs4 != null) {
+            rs4.next()
+            carbooked.setText(rs4.getString(3))
+        }
     }
-
 }
