@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_reviewshistory.*
 import kotlinx.android.synthetic.main.activity_rideshows.*
+import java.math.BigInteger
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
@@ -54,7 +55,9 @@ class reviewshistory : AppCompatActivity() {
             val  NAME = (this.application as GlobalClass).getSomeVariable()
             val userid = Integer.parseInt(NAME)
             val  cardname= findViewById<EditText>(R.id.cardname).text.toString()
-            val  cardnumber= Integer.parseInt(findViewById<EditText>(R.id.cardnumber).text.toString())
+
+            val  numbercard= findViewById<EditText>(R.id.cardnumber).text.toString()
+            val cardnumber = BigInteger(numbercard)
             val  expdate= findViewById<EditText>(R.id.mmaaaa).text.toString()
             val  cvv= Integer.parseInt(findViewById<EditText>(R.id.cvv).text.toString())
             val  cardtype= findViewById<EditText>(R.id.cardtype).text.toString()

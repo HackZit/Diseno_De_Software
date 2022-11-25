@@ -1,0 +1,1 @@
+DELETE FROM payment_methods WHERE cellphonenumber='3201478959';
