@@ -1,3 +1,4 @@
+
 CREATE TABLE IF NOT EXISTS users(
     userid serial primary key,
     name VARCHAR(50) NOT NULL,
@@ -69,15 +70,15 @@ CREATE TABLE IF NOT EXISTS parking_details(
     parkingsid serial primary key,
     numberofspots int NOT NULL,
     numberofspotsoccupied int NOT NULL,
-    parkinghours time NOT NULL,
-    price float NOT NULL
+    parkinghours time NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS parking_locations(
     parkingsid serial primary key,
     address VARCHAR(50) NOT NULL,
     contactnumber VARCHAR(10) NOT NULL,
-    businessname VARCHAR(50) NOT NULL
+    businessname VARCHAR(50) NOT NULL,
+    price float NOT NULL
 );
 CREATE TABLE IF NOT EXISTS client_cloud(
 

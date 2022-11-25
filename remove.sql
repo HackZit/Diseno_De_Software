@@ -1,1 +1,3 @@
-DELETE FROM payment_methods WHERE cellphonenumber='3201478959';
+DELETE FROM parking_history WHERE parkingsid=1;
+DELETE FROM parking_history WHERE parkingsid=2;
+
