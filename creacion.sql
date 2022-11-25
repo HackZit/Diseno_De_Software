@@ -31,14 +31,17 @@ CREATE TABLE IF NOT EXISTS parking_spot(
     carid int NOT NULL,
     parktime time NOT NULL,
     parkinghistoryid int NOT NULL,
-    parkingsid int NOT NULL
+    parkingsid int NOT NULL,
+    datepark date NOT NULL,
+    userid int NOT NULL,
+    isactive Bit NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS payment_methods(
     userid int NOT NULL,
     cardholder VARCHAR(50) NOT NULL,
-    cardnumber int NOT NULL,
-    expirationdate date NOT NULL,
+    cardnumber bigint NOT NULL,
+    expirationdate VARCHAR(10) NOT NULL,
     cvv int NOT NULL,
     cardtype VARCHAR(50) NOT NULL,
     billingaddress VARCHAR(50) NOT NULL,
@@ -66,7 +69,8 @@ CREATE TABLE IF NOT EXISTS parking_details(
     parkingsid serial primary key,
     numberofspots int NOT NULL,
     numberofspotsoccupied int NOT NULL,
-    parkinghours time NOT NULL
+    parkinghours time NOT NULL,
+    price float NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS parking_locations(

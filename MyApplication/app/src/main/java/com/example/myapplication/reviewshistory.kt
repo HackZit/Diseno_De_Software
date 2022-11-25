@@ -6,7 +6,9 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_reviewshistory.*
@@ -40,72 +42,74 @@ class reviewshistory : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reviewshistory)
-        query()
+
     }
 
-    fun query() {
-        /*ActivityCompat.requestPermissions(
-            this,
-            arrayOf(Manifest.permission.INTERNET),
-            PackageManager.PERMISSION_GRANTED
-        )
-        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-        StrictMode.setThreadPolicy(policy)
+    fun addpayment(view: View?) {
+
         try {
             Class.forName(Classes)
             connection = (this.application as GlobalClass).getConnection()
             //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
-            val  username= (this.application as GlobalClass).getSomeVariable()
+            val  NAME = (this.application as GlobalClass).getSomeVariable()
+            val userid = Integer.parseInt(NAME)
+            val  cardname= findViewById<EditText>(R.id.cardname).text.toString()
+            val  cardnumber= Integer.parseInt(findViewById<EditText>(R.id.cardnumber).text.toString())
+            val  expdate= findViewById<EditText>(R.id.mmaaaa).text.toString()
+            val  cvv= Integer.parseInt(findViewById<EditText>(R.id.cvv).text.toString())
+            val  cardtype= findViewById<EditText>(R.id.cardtype).text.toString()
+            val  billingaddr= findViewById<EditText>(R.id.billadr).text.toString()
+            val  cellphone= findViewById<EditText>(R.id.cellphone).text.toString()
+            val sql = "INSERT INTO payment_methods (userid, cardholder, cardnumber, expirationdate, cvv, cardtype, billingaddress, cellphonenumber) VALUES ($userid, '$cardname', $cardnumber, '$expdate', $cvv, '$cardtype', '$billingaddr', '$cellphone')"
+            Log.println(Log.DEBUG,"debug", "SQL " + sql)
+            with(connection) {
+                this?.createStatement()?.execute(sql)
+                //this?.commit()
+                Log.println(Log.DEBUG,"debug", "Conectado " + sql);
 
-            val sql2 = "SELECT * FROM viajes"
-            val rs2 = connection?.createStatement()?.executeQuery(sql2)
-            var ride = rideshowev("test","test", "test", 0,0, R.drawable.coche)
-            var listaRides = listOf(ride)
-            listaRides = listaRides.minus(ride)
-
-            if (rs2 != null){
-                while (!rs2.isLast) {
-                    //antes del while hacer query cantidad total viajes count, dentro del while cantidad total
-                    //por cada viaje hay que leer los pasajeros arranca proceso hecho
-                    rs2.next()
-                    var list1: List<String>? = null
-                    list1 = rs2.getString(5).split(",")
-                    list1.forEach {
-                        if (username.equals(it)) {
-
-                            var ride = rideshowev(
-                                rs2.getString(1),
-                                rs2.getString(2),
-                                rs2.getString(3),
-                                rs2.getString(8),
-                                R.drawable.coche
-                            )
-                            listaRides = listaRides.plus(ride)
-                        }
-                    }
-                }
             }
-
-
-            val adapter = rideAdapter(this, listaRides)
-            listareviewshist.adapter = adapter
-
-            listareviewshist.setOnItemClickListener { parent, view, position, id ->
-                val intent = Intent(this, ReviewsHistoryActive::class.java)
-                intent.putExtra("rides",listaRides[position])
-                startActivity(intent)
-            }
-
-
-
+            Toast.makeText(this, "Correct Payment Added", Toast.LENGTH_SHORT).show()
+            val intent= Intent(this, rideshows::class.java)
+            startActivity(intent)
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()
-            //Toast.makeText(this, "Class fail", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error payment method", Toast.LENGTH_SHORT).show()
         } catch (e: SQLException) {
             e.printStackTrace()
             //Toast.makeText(this, "Connected no " + e, Toast.LENGTH_LONG).show()
-        }*/
+        }
     }
 
+    fun addcar(view: View?) {
+
+        try {
+            Class.forName(Classes)
+            connection = (this.application as GlobalClass).getConnection()
+            //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
+            val  NAME = (this.application as GlobalClass).getSomeVariable()
+            val userid = Integer.parseInt(NAME)
+            val  licenseplate= findViewById<EditText>(R.id.licenseplate).text.toString()
+            val  carbrand= findViewById<EditText>(R.id.carbrand).text.toString()
+            val  modelcar= findViewById<EditText>(R.id.modelcar).text.toString()
+            val  cartype= findViewById<EditText>(R.id.cartype).text.toString()
+            val sql = "INSERT INTO car_data (userid, licenseplate, carbrand, typeofcar, carmodel) VALUES ($userid, '$licenseplate', '$carbrand', '$cartype', '$modelcar')"
+            Log.println(Log.DEBUG,"debug", "SQL " + sql)
+            with(connection) {
+                this?.createStatement()?.execute(sql)
+                //this?.commit()
+                Log.println(Log.DEBUG,"debug", "Conectado " + sql);
+
+            }
+            Toast.makeText(this, "Car Saved", Toast.LENGTH_SHORT).show()
+            val intent= Intent(this, rideshows::class.java)
+            startActivity(intent)
+        } catch (e: ClassNotFoundException) {
+            e.printStackTrace()
+            Toast.makeText(this, "Car failed to save", Toast.LENGTH_SHORT).show()
+        } catch (e: SQLException) {
+            e.printStackTrace()
+            //Toast.makeText(this, "Connected no " + e, Toast.LENGTH_LONG).show()
+        }
+    }
 
 }
