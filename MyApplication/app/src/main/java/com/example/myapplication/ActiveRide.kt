@@ -50,6 +50,7 @@ class ActiveRide : AppCompatActivity() {
     var parkingsid: String? = null
     var carros: ArrayList<String>? = null
     var carsid: ArrayList<Int>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_active_ride)
@@ -163,14 +164,16 @@ class ActiveRide : AppCompatActivity() {
             val pid = Integer.parseInt(parkingsid)
             val carid=carsid?.get(spinnerCarros.selectedItemPosition)
             val  time = findViewById<EditText>(R.id.etTime1).text.toString()
+            val  date = findViewById<EditText>(R.id.resdate).text.toString()
             Log.println(Log.DEBUG,"debug", "carsid"+carid)
-            val sql2 = "INSERT INTO parking_spot(spotid, carid ,parktime ,parkinghistoryid, parkingsid) VALUES ($notfresp, $carid,'$time',$phistory,$pid)"
+            val user = Integer.parseInt(username)
+            val sql2 = "INSERT INTO parking_spot(spotid, carid, parktime, parkinghistoryid, parkingsid, datepark, userid, isactive) VALUES ($notfresp, $carid,'$time',$phistory,$pid, $date, $user, 1)"
             with(connection) {
                 this?.createStatement()?.execute(sql2)
                 Log.println(Log.DEBUG,"debug", "sql2"+sql2)
                 //this?.commit()
             }
-            val user = Integer.parseInt(username)
+
 
             val sql3 = "INSERT INTO parking_history(spotid,userid,parkingsid) VALUES ($notfresp,$user,$pid)"
             with(connection) {

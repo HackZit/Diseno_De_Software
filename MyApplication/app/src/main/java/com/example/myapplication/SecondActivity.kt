@@ -10,11 +10,9 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
@@ -59,27 +57,54 @@ class SecondActivity: AppCompatActivity() {
 
 
     private var connection: Connection? = null
-    private var permissionDenied = false
-    private lateinit var map: GoogleMap
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    //current and destination location objects
-    var myLocation: Location? = null
-    var destinationLocation: Location? = null
-    protected var start: LatLng? = null
-    protected var end: LatLng? = null
-
-    //polyline object
-    private var polylines: MutableList<Polyline>? = null
+    var carros: ArrayList<String>? = null
+    var carsid: ArrayList<Int>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Set the layout file as the content view.
         setContentView(R.layout.activity_second)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        // Get a handle to the fragment and register the callback.
 
-        //dir()
+
+        // poblacion del dropdown
+        val spinnerCarros = findViewById<Spinner>(R.id.dropDownBooking)
+
+        //seponenlosnombresdeloscarrosdentrodelarray
+        val useridsql=(this.application as GlobalClass).getSomeVariable()
+        Log.println(Log.DEBUG,"debug", "$useridsql es lo que saca en useridsql")
+
+        val sql="SELECT * FROM parking_spot WHERE userid = $useridsql AND isactive = 1"
+        Log.println(Log.DEBUG,"debug", "$sql es lo que manda")
+
+        val rs=connection?.createStatement()?.executeQuery(sql)
+        Log.println(Log.DEBUG,"debug", "$rs es lo que responde")
+        carros = ArrayList()
+        carsid = ArrayList()
+
+        if(rs!=null){
+            Log.println(Log.DEBUG,"debug", "entro")
+            while(!rs.isLast){
+                rs.next()
+                val carBrand=rs.getString(4)
+                val carModel=rs.getString(6)
+                val plate=rs.getString(3)
+                carros!!.add("$carBrand $carModel $plate")
+                carsid!!.add(rs.getInt(1))
+                Log.println(Log.DEBUG,"debug", "$carBrand $carModel $plate es lo que pondra")
+            }
+        }
+
+        // Creating adapter for spinner
+        val dataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_item, carros!!
+        )
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinnerCarros.setAdapter(dataAdapter)
     }
     /*fun dir (){
         ActivityCompat.requestPermissions(
