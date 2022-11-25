@@ -68,6 +68,7 @@ class SecondActivity: AppCompatActivity() {
         // Set the layout file as the content view.
         setContentView(R.layout.activity_second)
 
+        connection = (this.application as GlobalClass).getConnection()
 
         // poblacion del dropdown
         val spinnerParking = findViewById<Spinner>(R.id.dropDownBooking)
@@ -76,36 +77,38 @@ class SecondActivity: AppCompatActivity() {
         val useridsql=(this.application as GlobalClass).getSomeVariable()
         Log.println(Log.DEBUG,"debug", "$useridsql es lo que saca en useridsql")
 
-        val sql="SELECT * FROM parking_spot WHERE userid = $useridsql AND isactive = 1"
+        val sql="SELECT * FROM parking_spot WHERE userid = $useridsql AND isactive = '1'"
         Log.println(Log.DEBUG,"debug", "$sql es lo que manda")
 
         val rs=connection?.createStatement()?.executeQuery(sql)
         Log.println(Log.DEBUG,"debug", "$rs es lo que responde")
 
+        parkings = ArrayList<String>()
         val parkigsID = ""
         if(rs!=null){
             Log.println(Log.DEBUG,"debug", "entro")
             while(!rs.isLast){
                 rs.next()
 
-                val parkname = ""
+                var parkname = ""
                 val parkigsIDPrev=parkigsID
                 val parkigsID=rs.getString(5)
                 if(parkigsIDPrev !=parkigsID) {
                     val sql2 = "SELECT * FROM parking_locations WHERE parkingsid = $parkigsID"
-                    Log.println(Log.DEBUG, "debug", "$sql es lo que manda2")
+                    Log.println(Log.DEBUG, "debug", "$sql2 es lo que manda2")
 
-                    val rs2 = connection?.createStatement()?.executeQuery(sql)
+                    val rs2 = connection?.createStatement()?.executeQuery(sql2)
                     Log.println(Log.DEBUG, "debug", "$rs2 es lo que responde2")
                     if (rs2 != null) {
                         rs2.next()
-                        val parkname = rs2.getString(4)
+                        parkname = rs2.getString(4)
                     }
                 }
                 val spotID = rs.getString(1)
                 val parkDate = rs.getString(6)
-                parkings!!.add("$parkname $parkDate #$spotID")
-                Log.println(Log.DEBUG, "debug", "$parkname $parkDate #$spotID es lo que pondra")
+                val parkTime = rs.getString(3)
+                parkings!!.add("$parkname $parkDate $parkTime #$spotID")
+                Log.println(Log.DEBUG, "debug", "$parkname $parkDate #$spotID es lo que pondra park")
             }
         }
 
@@ -127,7 +130,7 @@ class SecondActivity: AppCompatActivity() {
         val sql3="SELECT * FROM payment_methods WHERE userid = $useridsql"
         Log.println(Log.DEBUG,"debug", "$sql es lo que manda")
 
-        val rs3=connection?.createStatement()?.executeQuery(sql)
+        val rs3=connection?.createStatement()?.executeQuery(sql3)
         Log.println(Log.DEBUG,"debug", "$rs es lo que responde")
         cards = ArrayList<String>()
 
@@ -135,9 +138,9 @@ class SecondActivity: AppCompatActivity() {
             Log.println(Log.DEBUG,"debug", "entro")
             while(!rs3.isLast){
                 rs3.next()
-                val cardNumber =rs3.getInt(3)
+                val cardNumber =rs3.getString(3)
                 cards!!.add("$cardNumber")
-                Log.println(Log.DEBUG,"debug", "$cardNumber es lo que pondra")
+                Log.println(Log.DEBUG,"debug", "$cardNumber es lo que pondra tarjeta")
             }
         }
         // Creating adapter for spinner
