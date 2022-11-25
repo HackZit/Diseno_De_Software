@@ -12,7 +12,7 @@
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="76dp"
         android:onClick="book"
         android:text="Pay Now!"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +33,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.685" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Card:"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.128"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.751" />
 
     <TextView
         android:id="@+id/textView20"
@@ -222,6 +236,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <Spinner
+        android:id="@+id/dropDownCard"
+        android:layout_width="241dp"
+        android:layout_height="50dp"
+        android:background="@drawable/gradient_spinner"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        tools:ignore="SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="520dp" />
 
     <TextView
         android:id="@+id/textView3"
