@@ -60,7 +60,7 @@ class SecondActivity: AppCompatActivity() {
     private var connection: Connection? = null
     var parkings: ArrayList<String>? = null
     var cards: ArrayList<String>? = null
-
+    var parkigsID : String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +84,7 @@ class SecondActivity: AppCompatActivity() {
         Log.println(Log.DEBUG,"debug", "$rs es lo que responde")
 
         parkings = ArrayList<String>()
-        val parkigsID = ""
+
         if(rs!=null){
             Log.println(Log.DEBUG,"debug", "entro")
             while(!rs.isLast){
@@ -92,7 +92,7 @@ class SecondActivity: AppCompatActivity() {
 
                 var parkname = ""
                 val parkigsIDPrev=parkigsID
-                val parkigsID=rs.getString(5)
+                parkigsID= rs.getString(5)
                 if(parkigsIDPrev !=parkigsID) {
                     val sql2 = "SELECT * FROM parking_locations WHERE parkingsid = $parkigsID"
                     Log.println(Log.DEBUG, "debug", "$sql2 es lo que manda2")
@@ -209,5 +209,39 @@ class SecondActivity: AppCompatActivity() {
             rs4.next()
             carbooked.setText(rs4.getString(3))
         }
+    }
+    fun Pagado(view: View){
+        connection = (this.application as GlobalClass).getConnection()
+        val sql1 = "SELECT * FROM parking_details WHERE parkingsid=$parkigsID"
+        Log.println(Log.DEBUG, "debug", "$sql1 es lo que manda4")
+
+        val rs1 = connection?.createStatement()?.executeQuery(sql1)
+        Log.println(Log.DEBUG, "debug", "$rs1 es lo que responde4")
+        var numocc=0
+        if (rs1 != null) {
+            if (!rs1.isBeforeFirst() ) {
+                System.out.println("No data")
+
+            } else {
+                rs1.next()
+                numocc = (rs1.getInt(3))
+            }
+        }
+        numocc-=1
+        val sql2 ="UPDATE parking_details Set numberofspotsoccupied=$numocc WHERE parkingsid=$parkigsID"
+        with(connection) {
+            this?.createStatement()?.execute(sql2)
+            Log.println(Log.DEBUG,"debug", "sql2"+sql2)
+            //this?.commit()
+        }
+        val sql3 ="UPDATE parking_spot Set isactive='0' WHERE spotid=$selSpotID"
+        with(connection) {
+            this?.createStatement()?.execute(sql3)
+            Log.println(Log.DEBUG,"debug", "sql3"+sql3)
+            //this?.commit()
+        }
+        Toast.makeText(this, "PAY SUCCESFULL", Toast.LENGTH_SHORT).show()
+        val intent= Intent(this, rideshows::class.java)
+        startActivity(intent)
     }
 }
