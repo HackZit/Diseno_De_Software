@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Polyline
 import kotlinx.android.synthetic.main.activity_active_ride.*
 import java.sql.Connection
+import java.sql.ResultSet
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -149,14 +150,39 @@ class ActiveRide : AppCompatActivity() {
                 Log.println(Log.DEBUG,"debug", "sql1"+sql1)
                 //this?.commit()
             }
+            val sql5 = "SELECT * FROM parking_spot WHERE parkingsid = $parkingsid"
+            val rs = connection?.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)?.executeQuery(sql5)
+            var newspot: Int? = null
+            if(rs!=null){
+                if (!rs.isBeforeFirst() ) {
+                    System.out.println("No data")
+                    newspot = 1
+                } else {
+                    Log.println(Log.DEBUG,"debug", "entro")
+                    newspot = 1
+                    while(!rs.isLast){
+                        rs.next()
+                        val spotid=Integer.parseInt(rs.getString(1))
+                        val isactive=Integer.parseInt(rs.getString(8))
+                        Log.println(Log.DEBUG,"debug", "SpotID "+ spotid +" isactive "+ isactive + " newspot "+ newspot)
+                        if (spotid == newspot && isactive == 1) {
+                            rs.beforeFirst()
+                            newspot += 1
+                            Log.println(Log.DEBUG,"debug", "NEWSPOT MAS 1")
+                        }
+
+                    }
+                }
+
+            }
 
             val sql4 = "SELECT COUNT(*) as count FROM parking_history"
-            val rs = connection?.createStatement()?.executeQuery(sql4)
+            val rs1 = connection?.createStatement()?.executeQuery(sql4)
 
             var phistory = 0
-            if (rs != null) {
-                rs.next()
-                val count: Int = rs.getInt("count")
+            if (rs1 != null) {
+                rs1.next()
+                val count: Int = rs1.getInt("count")
                 phistory = count + 1
             }
 
@@ -167,7 +193,7 @@ class ActiveRide : AppCompatActivity() {
             val  date = findViewById<EditText>(R.id.resdate).text.toString()
             Log.println(Log.DEBUG,"debug", "carsid"+carid)
             val user = Integer.parseInt(username)
-            val sql2 = "INSERT INTO parking_spot(spotid, carid, parktime, parkinghistoryid, parkingsid, datepark, userid, isactive) VALUES ($notfresp, $carid,'$time',$phistory,$pid, $date, $user, 1)"
+            val sql2 = "INSERT INTO parking_spot(spotid, carid, parktime, parkinghistoryid, parkingsid, datepark, userid, isactive) VALUES ($newspot, $carid,'$time',$phistory,$pid, '$date', $user, '1')"
             with(connection) {
                 this?.createStatement()?.execute(sql2)
                 Log.println(Log.DEBUG,"debug", "sql2"+sql2)
@@ -175,7 +201,7 @@ class ActiveRide : AppCompatActivity() {
             }
 
 
-            val sql3 = "INSERT INTO parking_history(spotid,userid,parkingsid) VALUES ($notfresp,$user,$pid)"
+            val sql3 = "INSERT INTO parking_history(spotid,userid,parkingsid) VALUES ($newspot,$user,$pid)"
             with(connection) {
                 this?.createStatement()?.execute(sql3)
                 //this?.commit()
