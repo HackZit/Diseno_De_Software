@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_second.*
 import java.io.IOException
 import java.sql.Connection
 import java.sql.DriverManager
@@ -57,8 +58,9 @@ class SecondActivity: AppCompatActivity() {
 
 
     private var connection: Connection? = null
-    var carros: ArrayList<String>? = null
-    var carsid: ArrayList<Int>? = null
+    var parkings: ArrayList<String>? = null
+    var cards: ArrayList<String>? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,11 +68,95 @@ class SecondActivity: AppCompatActivity() {
         // Set the layout file as the content view.
         setContentView(R.layout.activity_second)
 
+        connection = (this.application as GlobalClass).getConnection()
 
         // poblacion del dropdown
-        val spinnerCarros = findViewById<Spinner>(R.id.dropDownBooking)
+        val spinnerParking = findViewById<Spinner>(R.id.dropDownBooking)
 
-        //seponenlosnombresdeloscarrosdentrodelarray
+        //se ponen los nombres de los parkeaderos dentro del array
+        val useridsql=(this.application as GlobalClass).getSomeVariable()
+        Log.println(Log.DEBUG,"debug", "$useridsql es lo que saca en useridsql")
+
+        val sql="SELECT * FROM parking_spot WHERE userid = $useridsql AND isactive = '1'"
+        Log.println(Log.DEBUG,"debug", "$sql es lo que manda")
+
+        val rs=connection?.createStatement()?.executeQuery(sql)
+        Log.println(Log.DEBUG,"debug", "$rs es lo que responde")
+
+        parkings = ArrayList<String>()
+        val parkigsID = ""
+        if(rs!=null){
+            Log.println(Log.DEBUG,"debug", "entro")
+            while(!rs.isLast){
+                rs.next()
+
+                var parkname = ""
+                val parkigsIDPrev=parkigsID
+                val parkigsID=rs.getString(5)
+                if(parkigsIDPrev !=parkigsID) {
+                    val sql2 = "SELECT * FROM parking_locations WHERE parkingsid = $parkigsID"
+                    Log.println(Log.DEBUG, "debug", "$sql2 es lo que manda2")
+
+                    val rs2 = connection?.createStatement()?.executeQuery(sql2)
+                    Log.println(Log.DEBUG, "debug", "$rs2 es lo que responde2")
+                    if (rs2 != null) {
+                        rs2.next()
+                        parkname = rs2.getString(4)
+                    }
+                }
+                val spotID = rs.getString(1)
+                val parkDate = rs.getString(6)
+                val parkTime = rs.getString(3)
+                parkings!!.add("$parkname $parkDate $parkTime #$spotID")
+                Log.println(Log.DEBUG, "debug", "$parkname $parkDate #$spotID es lo que pondra park")
+            }
+        }
+
+        // Creating adapter for spinner
+        val dataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_item, parkings!!
+        )
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinnerParking.setAdapter(dataAdapter)
+
+
+
+        val spinnerCard = findViewById<Spinner>(R.id.dropDownCard)
+
+        //lo mismo pero con las tarjetas
+        val sql3="SELECT * FROM payment_methods WHERE userid = $useridsql"
+        Log.println(Log.DEBUG,"debug", "$sql es lo que manda")
+
+        val rs3=connection?.createStatement()?.executeQuery(sql3)
+        Log.println(Log.DEBUG,"debug", "$rs es lo que responde")
+        cards = ArrayList<String>()
+
+        if(rs3!=null){
+            Log.println(Log.DEBUG,"debug", "entro")
+            while(!rs3.isLast){
+                rs3.next()
+                val cardNumber =rs3.getString(3)
+                cards!!.add("$cardNumber")
+                Log.println(Log.DEBUG,"debug", "$cardNumber es lo que pondra tarjeta")
+            }
+        }
+        // Creating adapter for spinner
+        val dataAdapter2: ArrayAdapter<String> = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_item, cards!!
+        )
+
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinnerCard.setAdapter(dataAdapter2)
+    }
+    fun selectPark (){
+
+        dropDownBooking.selectedItemPosition
         val useridsql=(this.application as GlobalClass).getSomeVariable()
         Log.println(Log.DEBUG,"debug", "$useridsql es lo que saca en useridsql")
 
@@ -79,82 +165,8 @@ class SecondActivity: AppCompatActivity() {
 
         val rs=connection?.createStatement()?.executeQuery(sql)
         Log.println(Log.DEBUG,"debug", "$rs es lo que responde")
-        carros = ArrayList()
-        carsid = ArrayList()
 
-        if(rs!=null){
-            Log.println(Log.DEBUG,"debug", "entro")
-            while(!rs.isLast){
-                rs.next()
-                val carBrand=rs.getString(4)
-                val carModel=rs.getString(6)
-                val plate=rs.getString(3)
-                carros!!.add("$carBrand $carModel $plate")
-                carsid!!.add(rs.getInt(1))
-                Log.println(Log.DEBUG,"debug", "$carBrand $carModel $plate es lo que pondra")
-            }
-        }
 
-        // Creating adapter for spinner
-        val dataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
-            this,
-            android.R.layout.simple_spinner_item, carros!!
-        )
-
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        spinnerCarros.setAdapter(dataAdapter)
     }
-    /*fun dir (){
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(Manifest.permission.INTERNET),
-            PackageManager.PERMISSION_GRANTED
-        )
-        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-        StrictMode.setThreadPolicy(policy)
-        try {
-            Class.forName(Classes)
-            connection = (this.application as GlobalClass).getConnection()
-            //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
-            //val destinationview = findViewById<AutoCompleteTextView>(R.id.editTextTextPersonName2)
-            val username= (this.application as GlobalClass).getSomeVariable()
-
-            val sql1 = "SELECT COUNT(*) as count FROM direcciones WHERE USERNAME ='$username'"
-            val rs1 = connection?.createStatement()?.executeQuery(sql1)
-            println("RS1")
-            if (rs1 != null) {
-                rs1.next()
-                val count: Int = rs1.getInt("count")
-                println("Count "+ count)
-                if (count == 0) {
-
-                } else {
-                    val sql = "SELECT * FROM direcciones WHERE USERNAME ='$username'"
-                    val rs = connection?.createStatement()?.executeQuery(sql)
-                    var destinos = arrayOf("")
-                    if (rs != null) {
-                        while (!rs.isLast) {
-                            rs.next()
-                            println("Destino " + rs.getString(3))
-                            destinos = destinos.plus(rs.getString(3))
-                        }
-                    }
-                    val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, destinos)
-                    destinationview.setAdapter(adapter)
-                }
-            }
-
-        } catch (e: ClassNotFoundException) {
-            e.printStackTrace()
-            //Toast.makeText(this, "Class fail", Toast.LENGTH_SHORT).show()
-        } catch (e: SQLException) {
-            e.printStackTrace()
-            //Toast.makeText(this, "Connected no " + e, Toast.LENGTH_LONG).show()
-        }
-
-
-    }*/
 
 }
