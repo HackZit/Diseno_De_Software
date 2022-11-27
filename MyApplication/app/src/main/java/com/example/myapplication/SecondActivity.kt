@@ -214,6 +214,7 @@ class SecondActivity: AppCompatActivity() {
         connection = (this.application as GlobalClass).getConnection()
         val sql1 = "SELECT * FROM parking_details WHERE parkingsid=$parkigsID"
         Log.println(Log.DEBUG, "debug", "$sql1 es lo que manda4")
+        val useridsql=(this.application as GlobalClass).getSomeVariable()
 
         val rs1 = connection?.createStatement()?.executeQuery(sql1)
         Log.println(Log.DEBUG, "debug", "$rs1 es lo que responde4")
@@ -234,7 +235,7 @@ class SecondActivity: AppCompatActivity() {
             Log.println(Log.DEBUG,"debug", "sql2"+sql2)
             //this?.commit()
         }
-        val sql3 ="UPDATE parking_spot Set isactive='0' WHERE spotid=$selSpotID"
+        val sql3 ="UPDATE parking_spot Set isactive='0' WHERE spotid=$selSpotID AND parkingsid = $parkigsID AND userid = $useridsql"
         with(connection) {
             this?.createStatement()?.execute(sql3)
             Log.println(Log.DEBUG,"debug", "sql3"+sql3)

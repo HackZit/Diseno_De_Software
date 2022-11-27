@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     private var connection: Connection? = null
     var email = ""
+    var pass = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             (this.application as GlobalClass).setConnection(connection)
             //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
             email = findViewById<EditText>(R.id.emailtxt).text.toString()
-            val  pass= findViewById<EditText>(R.id.passwordtxt).text.toString()
+            pass = findViewById<EditText>(R.id.passwordtxt).text.toString()
             val sql = "SELECT COUNT(*) as count FROM users WHERE email='$email' AND password='$pass'"
             VerifyLogin(sql)
 
@@ -89,10 +91,18 @@ class MainActivity : AppCompatActivity() {
             val count: Int = rs.getInt("count")
             if (count == 1) {
                 //Toast.makeText(this, "Verificado $count", Toast.LENGTH_SHORT).show()
-                (this.application as GlobalClass).setSomeVariable(rs.getString(1))
+                val sql2 = "SELECT * FROM users WHERE email='$email' AND password='$pass'"
+                val rs2 = connection?.createStatement()?.executeQuery(sql2)
+                if (rs2 != null) {
+                    rs2.next()
+                    val useridsql = rs2?.getString(1)
+                    Log.println(Log.DEBUG,"debug", "$useridsql es lo que saca en useridsql")
+                    (this.application as GlobalClass).setSomeVariable(useridsql)
 
-                val intent= Intent(this, rideshows::class.java)
-                startActivity(intent)
+                    val intent= Intent(this, rideshows::class.java)
+                    startActivity(intent)
+                }
+
             } else {
                 //Toast.makeText(this, "Error $count", Toast.LENGTH_SHORT).show()
                 val intent= Intent(this, RegisterAtivity::class.java)
